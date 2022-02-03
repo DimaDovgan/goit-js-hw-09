@@ -1,5 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 
 const startBtn = document.querySelector("[data-start]");
@@ -18,7 +19,7 @@ const options={
     onClose(selectedDates) {
         data = selectedDates[0];
         if (data.getTime() <= new Date().getTime()) {
-            window.alert("Please choose a date in the future");
+          Notify.failure("Please choose a date in the future");
             startBtn.disabled = true;
             clearInterval(Timer.intervalId);
             return;
@@ -53,14 +54,12 @@ class Timer{
     
     if (this.isActive === false) {
       this.intervalId = setInterval(() => {
-        console.log("Timer run")
         let Time = this.convertMs(data.getTime() - new Date().getTime());
           this.onTick(Time);
          
         
       }, 1000);
       this.isActive = true;
-      console.log(this.isActive);
     }
     
       
